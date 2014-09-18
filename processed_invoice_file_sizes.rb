@@ -8,14 +8,14 @@
 #   puts "#{fname} #{File.open(fname, 'r').readlines.length}"
 # end
 
-path = '../invoice-auditor/' # relative path from current file to
-#                              required folder
-
-Dir["File.dirname(__FILE__) + '/' + path + '*.csv'"].each do |fname|
-  require_relative path + File.basename(fname) # require all files with .csv
-  #                                              extension in this folder
-  puts "#{fname} #{File.open(fname, 'r').readlines.length}"
+def parse_invoice(csv_filename)
+  invoice_info = { file_name: csv_filename,
+                   line_count: File.open(csv_filename, 'r').readlines.length }
+  invoice_info
 end
 
-# def invoice_info
-#
+Dir[ARGV.first].each do |csv_filename|
+  puts csv_filename
+  invoice = parse_invoice(csv_filename)
+  puts invoice
+end
